@@ -1,0 +1,103 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Learnpress Zarinpal Payment\n"
+"POT-Creation-Date: 2018-04-20 16:57+0430\n"
+"PO-Revision-Date: 2018-04-20 16:58+0430\n"
+"Last-Translator: \n"
+"Language-Team: Midiya Soft\n"
+"Language: fa_IR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.0.6\n"
+"X-Poedit-Basepath: ..\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: inc/class-lp-gateway-zarinpal.php:77 inc/class-lp-gateway-zarinpal.php:155
+msgid "Zarinpal"
+msgstr "زرین پال"
+
+#: inc/class-lp-gateway-zarinpal.php:78
+msgid "Make a payment with Zarinpal."
+msgstr "ایجاد درگاه پرداخت با زرین پال."
+
+#: inc/class-lp-gateway-zarinpal.php:141
+msgid "Enable"
+msgstr "فعال کردن"
+
+#: inc/class-lp-gateway-zarinpal.php:147
+msgid "Enable Zarin Gate"
+msgstr "فعال سازی زرین گیت"
+
+#: inc/class-lp-gateway-zarinpal.php:154
+msgid "Title"
+msgstr "عنوان"
+
+#: inc/class-lp-gateway-zarinpal.php:171
+msgid "Description"
+msgstr "توضیحات"
+
+#: inc/class-lp-gateway-zarinpal.php:172
+msgid "Pay with Zarinpal"
+msgstr "پرداخت با زرین پال"
+
+#: inc/class-lp-gateway-zarinpal.php:190
+msgid "Merchant ID"
+msgstr "مرچنت کد"
+
+#: inc/class-lp-gateway-zarinpal.php:263
+#, php-format
+msgid "Charge for %s"
+msgstr "شارژ برای  %s"
+
+#: inc/class-lp-gateway-zarinpal.php:288
+msgid "Invalid email format."
+msgstr "ایمیل وارد شده صحیح نمی باشد."
+
+#: inc/class-lp-gateway-zarinpal.php:291
+msgid "Invalid mobile format."
+msgstr "شماره موبایل وارد شده صحیح نمی باشد."
+
+#: inc/class-lp-gateway-zarinpal.php:400
+msgid "Payment has been successfully completed"
+msgstr "پرداخت با موفقیت انجام شد."
+
+#: inc/load.php:103
+msgid "Settings"
+msgstr "تنظیمات"
+
+#: learnpress-zarinpal.php:51
+#, php-format
+msgid ""
+"<strong>%s</strong> addon version %s requires %s version %s or higher is "
+"<strong>installed</strong> and <strong>activated</strong>."
+msgstr ""
+"<strong>%s</strong>افزونه نسخه %s نیازمند %s نسخه %s یا بالاتر است تا "
+"<strong>نصب</strong> و <strong>فعال</strong> شود."
+
+#: learnpress-zarinpal.php:52
+msgid "LearnPress Zarinpal Payment"
+msgstr "درگاه پرداخت زرین پال برای لرن پرس"
+
+#: learnpress-zarinpal.php:54
+msgid "LearnPress"
+msgstr "لرن پرس"
+
+#: templates/form.php:24
+msgid "Email"
+msgstr "ایمیل"
+
+#: templates/form.php:31
+msgid "Mobile"
+msgstr "شماره موبایل"
+
+#~ msgid "Error connecting to gateway"
+#~ msgstr "خطایی در اتصال به درگاه رخ داده است."
+
+#~ msgid "Email <span class=\"required\">*</span>"
+#~ msgstr "ایمیل <span class=\"required\">*</span>"
+
+#~ msgid "Mobile <span class=\"required\">*</span>"
+#~ msgstr "شماره موبایل <span class=\"required\">*</span>"

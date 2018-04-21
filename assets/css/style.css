@@ -1,0 +1,33 @@
+#learn-press-zarinpal-form {
+    padding: 20px;
+    background: #FFF;
+    border: 1px solid #DDD;
+    margin: 20px 0;
+}
+#learn-press-zarinpal-form .learn-press-form-row {
+	margin-bottom: 65px;
+}
+#learn-press-zarinpal-form .learn-press-form-row.has-error label,
+#learn-press-zarinpal-form .learn-press-form-row.has-error label .required{
+    color: #cc1600;
+}
+#learn-press-zarinpal-form .learn-press-form-row.has-error input,
+#learn-press-zarinpal-form .learn-press-form-row.has-error select{
+    border-color: #cc1600;
+}
+#learn-press-zarinpal-form .learn-press-form-row input {
+	direction:ltr;
+	text-align:left;
+}
+#learn-press-zarinpal-form .learn-press-zarinpal-form-clear {
+	clear:both;
+}
+#learn-press-zarinpal-form .learn-press-form-row label {
+	float:right;
+	width:150px;
+}
+/* rtl */
+#learn-press-zarinpal-form.learn-press-form-zarinpal-rtl {
+	direction:rtl;
+	text-align:right;
+}
