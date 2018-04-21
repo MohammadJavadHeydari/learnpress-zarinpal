@@ -2,7 +2,7 @@
 /**
  * Zarinpal payment gateway class.
  *
- * @author   MidyaSoft
+ * @author   Mohmmad Javad Heydari
  * @package  LearnPress/Zarinpal/Classes
  * @version  1.0.0
  */
@@ -39,10 +39,25 @@ if ( ! class_exists( 'LP_Gateway_Zarinpal' ) ) {
 		/**
 		 * @var string
 		 */
-		private $merchantID = null;
+		private $restPaymentRequestUrl = 'https://www.zarinpal.com/pg/rest/WebGate/PaymentRequest.json';
 		
 		/**
 		 * @var string
+		 */
+		private $restPaymentVerification = 'https://www.zarinpal.com/pg/rest/WebGate/PaymentVerification.json';
+		
+		/**
+		 * @var string
+		 */
+		private $soap = false;
+		
+		/**
+		 * @var string
+		 */
+		private $merchantID = null;
+		
+		/**
+		 * @var boolean
 		 */
 		private $zarinGate = false;
 
@@ -62,7 +77,6 @@ if ( ! class_exists( 'LP_Gateway_Zarinpal' ) ) {
 		protected $posted = null;
 
 		/**
-		 * Request Authority
 		 *
 		 * @var string
 		 */
@@ -117,6 +131,8 @@ if ( ! class_exists( 'LP_Gateway_Zarinpal' ) ) {
 				add_action( 'init', array( $this, 'register_web_hook' ) );
 			}
 			add_action( 'learn_press_web_hooks_processed', array( $this, 'web_hook_process_zarinpal' ) );
+			
+			add_action("learn-press/before-checkout-order-review", array( $this, 'error_message' ));
 		}
 		
 		/**
@@ -127,7 +143,7 @@ if ( ! class_exists( 'LP_Gateway_Zarinpal' ) ) {
 		public function register_web_hook() {
 			learn_press_register_web_hook( 'zarinpal', 'learn_press_zarinpal' );
 		}
-	
+			
 		/**
 		 * Admin payment settings.
 		 *
@@ -216,6 +232,21 @@ if ( ! class_exists( 'LP_Gateway_Zarinpal' ) ) {
 			return ob_get_clean();
 		}
 
+		/**
+		 * Error message.
+		 *
+		 * @return array
+		 */
+		public function error_message() {
+			if(!isset($_SESSION))
+				session_start();
+			if(isset($_SESSION['zarinpal_error']) && intval($_SESSION['zarinpal_error']) === 1) {
+				$_SESSION['zarinpal_error'] = 0;
+				$template = learn_press_locate_template( 'payment-error.php', learn_press_template_path() . '/addons/zarinpal-payment/', LP_ADDON_ZARINPAL_PAYMENT_TEMPLATE );
+				include $template;
+			}
+		}
+		
 		/**
 		 * @return mixed
 		 */
@@ -331,10 +362,6 @@ if ( ! class_exists( 'LP_Gateway_Zarinpal' ) ) {
 		public function get_zarinpal_authority() {
 			if ( $this->get_form_data() ) {
 				$checkout = LP()->checkout();
-				
-				$client = new SoapClient($this->wsdl, ['encoding' => 'UTF-8']);
-				
-				
 				$data = [
 					'MerchantID' => $this->merchantID,
 					'Amount' => $this->form_data['amount'],
@@ -343,8 +370,14 @@ if ( ! class_exists( 'LP_Gateway_Zarinpal' ) ) {
 					'Mobile' => (!empty($this->posted['mobile'])) ? $this->posted['mobile'] : "",
 					'CallbackURL' => get_site_url() . '/?' . learn_press_get_web_hook( 'zarinpal' ) . '=1&order_id='.$this->order->get_id(),
 				];
+								
+				if($this->soap) {
+					$client = new SoapClient($this->wsdl, ['encoding' => 'UTF-8']);
+					$result = $client->PaymentRequest($data);
+				} else {
+					$result = $this->rest_payment_request($data);
+				}
 				
-				$result = $client->PaymentRequest($data);
 				if($result->Status == 100) {
 					$this->authority = $result->Authority;
 					return true;
@@ -367,23 +400,85 @@ if ( ! class_exists( 'LP_Gateway_Zarinpal' ) ) {
 						$amount = $order->order_total / 10 ;
 					} else {
 						$amount = $order->order_total ;
-					}		
-					$client = new SoapClient($this->verifyUrl, ['encoding' => 'UTF-8']);
-					$result = $client->PaymentVerification([
+					}	
+					
+					$data = array(
 						'MerchantID' => $this->merchantID,
 						'Authority' => $_GET['Authority'],
 						'Amount' => $amount,
-					]);		
+					);
+					if($this->soap) {
+						$client = new SoapClient($this->verifyUrl, ['encoding' => 'UTF-8']);
+						$result = $client->PaymentVerification($data);
+					} else {
+						$result = $this->rest_payment_verification($data);
+					}		
 					if($result->Status == 100) {
+						$request["RefID"] = $result->RefID;
 						$this->authority = intval($_GET['Authority']);
 						$this->payment_status_completed($order , $request);
 						wp_redirect(esc_url( $this->get_return_url( $order ) ));
 						exit();
 					}
 				}
-				wp_redirect(esc_url( learn_press_get_page_link( 'checkout' )  ));
+				
+				if(!isset($_SESSION))
+					session_start();
+				$_SESSION['zarinpal_error'] = 1;
+				
+				wp_redirect(esc_url( learn_press_get_page_link( 'checkout' ) ));
 				exit();
 			}
+		}
+		
+		/**
+		 * Zarinpal REST payment request
+		 *
+		 */ 
+		public function rest_payment_request($data) {
+			$jsonData = json_encode($data);
+			$ch = curl_init($this->restPaymentRequestUrl);
+			curl_setopt($ch, CURLOPT_USERAGENT, 'ZarinPal Rest Api v1');
+			curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
+			curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonData);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+			curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+				'Content-Type: application/json',
+				'Content-Length: ' . strlen($jsonData)
+			));
+			$result = curl_exec($ch);
+			$err = curl_error($ch);
+			$result = json_decode($result);
+			curl_close($ch);
+			if ($err) {
+				$result = (object) array("Status"=>0,"RefID"=>0);
+			}
+			return $result;
+		}
+		
+		/**
+		 * Zarinpal REST payment verification
+		 *
+		 */ 
+		public function rest_payment_verification($data) {
+			$jsonData = json_encode($data);
+			$ch = curl_init($this->restPaymentVerification);
+			curl_setopt($ch, CURLOPT_USERAGENT, 'ZarinPal Rest Api v1');
+			curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
+			curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonData);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+			curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+				'Content-Type: application/json',
+				'Content-Length: ' . strlen($jsonData)
+			));
+			$result = curl_exec($ch);
+			$err = curl_error($ch);
+			$result = json_decode($result);
+			curl_close($ch);
+			if ($err) {
+				$result = (object) array("Status"=>0,"Authority"=>0);
+			}
+			return $result;
 		}
 		
 		/**
@@ -399,8 +494,9 @@ if ( ! class_exists( 'LP_Gateway_Zarinpal' ) ) {
 				exit;
 			}
 
-			$this->payment_complete( $order, ( !empty( $request['Authority'] ) ? $request['Authority'] : '' ), __( 'Payment has been successfully completed', 'learnpress' ) );
-
+			$this->payment_complete( $order, ( !empty( $request['RefID'] ) ? $request['RefID'] : '' ), __( 'Payment has been successfully completed', 'learnpress-zarinpal' ) );
+			update_post_meta( $order->get_id(), '_zarinpal_RefID', $request['RefID'] );
+			update_post_meta( $order->get_id(), '_zarinpal_authority', $request['Authority'] );
 		}
 
 		/**

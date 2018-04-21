@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Learnpress Zarinpal Payment\n"
-"POT-Creation-Date: 2018-04-20 16:57+0430\n"
-"PO-Revision-Date: 2018-04-20 16:58+0430\n"
+"POT-Creation-Date: 2018-04-21 13:17+0430\n"
+"PO-Revision-Date: 2018-04-21 13:17+0430\n"
 "Last-Translator: \n"
 "Language-Team: Midiya Soft\n"
 "Language: fa_IR\n"
@@ -15,52 +15,52 @@ msgstr ""
 "X-Poedit-KeywordsList: __;_e\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: inc/class-lp-gateway-zarinpal.php:77 inc/class-lp-gateway-zarinpal.php:155
+#: inc/class-lp-gateway-zarinpal.php:91 inc/class-lp-gateway-zarinpal.php:171
 msgid "Zarinpal"
 msgstr "زرین پال"
 
-#: inc/class-lp-gateway-zarinpal.php:78
+#: inc/class-lp-gateway-zarinpal.php:92
 msgid "Make a payment with Zarinpal."
 msgstr "ایجاد درگاه پرداخت با زرین پال."
 
-#: inc/class-lp-gateway-zarinpal.php:141
+#: inc/class-lp-gateway-zarinpal.php:157
 msgid "Enable"
 msgstr "فعال کردن"
 
-#: inc/class-lp-gateway-zarinpal.php:147
+#: inc/class-lp-gateway-zarinpal.php:163
 msgid "Enable Zarin Gate"
 msgstr "فعال سازی زرین گیت"
 
-#: inc/class-lp-gateway-zarinpal.php:154
+#: inc/class-lp-gateway-zarinpal.php:170
 msgid "Title"
 msgstr "عنوان"
 
-#: inc/class-lp-gateway-zarinpal.php:171
+#: inc/class-lp-gateway-zarinpal.php:187
 msgid "Description"
 msgstr "توضیحات"
 
-#: inc/class-lp-gateway-zarinpal.php:172
+#: inc/class-lp-gateway-zarinpal.php:188
 msgid "Pay with Zarinpal"
 msgstr "پرداخت با زرین پال"
 
-#: inc/class-lp-gateway-zarinpal.php:190
+#: inc/class-lp-gateway-zarinpal.php:206
 msgid "Merchant ID"
 msgstr "مرچنت کد"
 
-#: inc/class-lp-gateway-zarinpal.php:263
+#: inc/class-lp-gateway-zarinpal.php:289
 #, php-format
 msgid "Charge for %s"
 msgstr "شارژ برای  %s"
 
-#: inc/class-lp-gateway-zarinpal.php:288
+#: inc/class-lp-gateway-zarinpal.php:314
 msgid "Invalid email format."
 msgstr "ایمیل وارد شده صحیح نمی باشد."
 
-#: inc/class-lp-gateway-zarinpal.php:291
+#: inc/class-lp-gateway-zarinpal.php:317
 msgid "Invalid mobile format."
 msgstr "شماره موبایل وارد شده صحیح نمی باشد."
 
-#: inc/class-lp-gateway-zarinpal.php:400
+#: inc/class-lp-gateway-zarinpal.php:488
 msgid "Payment has been successfully completed"
 msgstr "پرداخت با موفقیت انجام شد."
 
@@ -92,6 +92,10 @@ msgstr "ایمیل"
 #: templates/form.php:31
 msgid "Mobile"
 msgstr "شماره موبایل"
+
+#: templates/payment-error.php:21
+msgid "Transation failed"
+msgstr "پرداخت ناموفق"
 
 #~ msgid "Error connecting to gateway"
 #~ msgstr "خطایی در اتصال به درگاه رخ داده است."

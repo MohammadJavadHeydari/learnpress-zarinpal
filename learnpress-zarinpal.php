@@ -1,11 +1,11 @@
 <?php
 /*
 Plugin Name: LearnPress - Zarinpal Payment
-Plugin URI: http://midiyasoft.com/learnpress
+Plugin URI: http://midiyasoft.com/
 Description: Zarinpal payment gateway for LearnPress.
-Author: Midiya Soft
+Author: Mohmmad Javad Heydari
 Version: 1.0.0
-Author URI: http://midiyasoft.com
+Author URI: https://github.com/MohammadJavadHeydari/
 Tags: learnpress, zarinpal
 Text Domain: learnpress-zarinpal
 Domain Path: /languages/

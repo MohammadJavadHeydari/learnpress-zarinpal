@@ -2,7 +2,7 @@
 /**
  * Plugin load class.
  *
- * @author   Midiyasoft
+ * @author   Mohmmad Javad Heydari
  * @package  LearnPress/Zarinpal/Classes
  * @version  1.0.0
  */

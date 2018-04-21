@@ -4,7 +4,7 @@
  *
  * This template can be overridden by copying it to yourtheme/learnpress/addons/zarinpal-payment/form.php.
  *
- * @author   MidiyaSoft 
+ * @author   Mohmmad Javad Heydari 
  * @package  LearnPress/Zarinpal/Templates
  * @version  1.0.0
  */
