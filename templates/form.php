@@ -23,7 +23,7 @@ defined( 'ABSPATH' ) || exit();
     <p class="learn-press-form-row">
         <label><?php echo wp_kses( __( 'Email', 'learnpress-zarinpal' ), array( 'span' => array() ) ); ?></label>
         <input type="text" name="learn-press-zarinpal[email]" id="learn-press-zarinpal-payment-email"
-               maxlength="19" value=""  placeholder="info@midiyasoft.com"/>
+               value="" placeholder="info@midiyasoft.com"/>
 		<div class="learn-press-zarinpal-form-clear"></div>
     </p>
 	<div class="learn-press-zarinpal-form-clear"></div>
